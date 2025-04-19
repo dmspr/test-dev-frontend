@@ -88,6 +88,61 @@ const isAnagram = () => {
 console.log(isAnagram)
 //   9. Buatkan fungsi yang memformat json (assets/json/case.json) menjadi seperti (assets/json/expectation.json)
 
+// chatGPT, mengubah format dari object di javascrpit
+const formatJson = () => {
+    const caseData = {
+        data: [
+            { category: "Buah", code: "B001", name: "Apel", total: 10 },
+            { category: "Hewan", code: "H002", name: "Buaya", total: 10 },
+            { category: "Hewan", code: "H001", name: "Kucing", total: 30 },
+            { category: "Buah", code: "B002", name: "Pepaya", total: 20 },
+            { category: "Buah", code: "B001", name: "Anggur", total: 5 },
+            { category: "Buah", code: "B002", name: "Pisang", total: 8 },
+            { category: "Hewan", code: "H002", name: "Komodo", total: 15 },
+            { category: "Sayuran", code: "S003", name: "Wortel", total: 25 },
+            { category: "Hewan", code: "H001", name: "Harimau", total: 10 },
+            { category: "Sayuran", code: "S001", name: "Bayam", total: 12 },
+            { category: "Sayuran", code: "S002", name: "Kangkung", total: 18 }
+        ]
+    };
+
+    const grouped = {};
+    let totalAll = 0;
+
+    caseData.data.forEach(item => {
+        totalAll += item.total;
+
+        if (!grouped[item.category]) {
+            grouped[item.category] = {
+                category: item.category,
+                total: 0,
+                data: {}
+            };
+        }
+
+        if (!grouped[item.category].data[item.code]) {
+            grouped[item.category].data[item.code] = {
+                total: 0,
+                data: []
+            };
+        }
+
+        grouped[item.category].data[item.code].data.push({
+            name: item.name,
+            total: item.total
+        });
+
+        grouped[item.category].total += item.total;
+        grouped[item.category].data[item.code].total += item.total;
+    });
+
+    const result = {
+        total: totalAll,
+        data: Object.values(grouped)
+    };
+
+    setOutput(JSON.stringify(result, null, 2));
+};
 
     return (
         <div className="min-h-screen px-10 py-10 bg-[#0a1930]">
@@ -120,7 +175,7 @@ console.log(isAnagram)
                     <button className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded w-full" onClick={isAnagram}>
                         Cek Anagram
                     </button>
-                    <button className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded w-full" onClick={""}>
+                    <button className="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded w-full" onClick={formatJson}>
                         Format JSON
                     </button>
                 </div>
