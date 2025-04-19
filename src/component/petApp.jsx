@@ -87,7 +87,6 @@ const isAnagram = () => {
 
 console.log(isAnagram)
 //   9. Buatkan fungsi yang memformat json (assets/json/case.json) menjadi seperti (assets/json/expectation.json)
-gig
 
 
     return (
